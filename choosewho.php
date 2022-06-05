@@ -27,8 +27,7 @@
     <?php
     for ($i = 1; $i < $number + 1; $i++) { ?>
         <div class="insert_name_div">
-            <label for="insert_name" style="padding-bottom: 10px;"></label><br>
-            <input type="text" placeholder="<?php echo $i; ?>번째 이름" name="insert_name_<?php echo $i; ?>" id="insert_name">
+            <input type="text" placeholder="<?php echo $i; ?>번째 이름" name="insert_name" id="<?php echo "insert_name_" . $i; ?>" style="margin:10px;">
         </div>
     <?php } ?>
     <div style="text-align: center; padding:30px">
@@ -38,9 +37,15 @@
 </body>
 <script>
     function choosewho() {
-        let name = document.getElementById("insert_name").value;
+        let name = new Array();
+        for (let i = 1; i < <?php echo $number; ?> + 1; i++) {
+            let str = String("insert_name_" + i);
+            //테스트를 위한 alert(str);
+            name.push(document.getElementById(str));
+            //테스트를 위한 alert(name[i - 1]);
+        }
         let random_number = Math.floor(Math.random() * name.length);
-        let name_picker = name[random_number];
+        let name_picker = name[random_number].value;
         alert(name_picker);
     }
 </script>
