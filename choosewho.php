@@ -46,7 +46,7 @@
         }
         let random_number = Math.floor(Math.random() * name.length);
         let name_picker = name[random_number].value;
-        alert(name_picker);
+        alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
     }
 </script>
 
