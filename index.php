@@ -39,6 +39,13 @@
             text-align: center;
         }
 
+        /* input type="number"일 때 화살표 삭제하기 */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         #input_num {
             border-top: none;
             border-right: none;
@@ -46,10 +53,11 @@
             border-color: white;
             text-align: center;
             font: white;
-            width: 100px;
+            width: 150px;
             background: transparent;
         }
 
+        /* 입력 중일 때 css 정의 */
         #input_num:focus {
             border-top: none;
             border-right: none;
@@ -57,12 +65,13 @@
             border-color: white;
             text-align: center;
             font: white;
-            width: 100px;
+            width: 150px;
             background: transparent;
             outline: none;
             color: white;
         }
 
+        /* 입력 중일 때 placeholder 요소 바꿔주기 */
         #input_num:focus::placeholder {
             color: white;
         }
@@ -70,7 +79,6 @@
         #input_label {
             color: white;
         }
-
 
         input::placeholder {
             text-align: center;
