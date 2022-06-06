@@ -14,37 +14,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title> 누가누가 운이 좋나 </title>
     <style>
-        .p_num {
+        body {
+            background-image: url(rule.jpg);
+            background-repeat: no-repeat;
+        }
+
+        .p_num_div {
             text-align: center;
-            margin: 20px;
-            padding: 30px;
+            padding: 25px;
         }
 
         h1 {
             text-align: center;
-            padding: 150px;
+            padding-top: 300px;
+            padding-bottom: 10px;
+            color: #ced4da;
+        }
+
+        .start_btn {
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        #input_num {
+            border-radius: 10px;
+            border: white solid 1px;
+            text-align: center;
+            width: 40px;
         }
 
         input::placeholder {
             text-align: center;
-        }
-
-        .start_btn {
-            text-align: center;
+            font-size: 10px;
         }
     </style>
 </head>
 
 <body>
-    <h1> 뭘 좀 알아보자 </h1>
+    <h1> 몇 명이서 놀 거야? </h1>
     <form id="input_num_form" action="choosewho.php" method="post">
-        <div class="p_num">
-            <lable for="input_num"> 몇 명이서 놀지? </lable><br>&nbsp;<br>
-            <input type="number" name="input_num" id="input_num" placeholder="숫자만 적을 수 있어요" required>
+
+        <div class="p_num_div">
+            <input type="number" name="input_num" id="input_num" placeholder="몇 명?">
         </div>
+
         <div class="start_btn">
-            <button id="start_btn" name="start_btn" onclick="return nextPage();"> 놀이 시작 !</button>
+            <button class="btn btn-primary" id=" start_btn" name="start_btn" onclick="return nextPage();"> 놀이 시작!</button>
         </div>
+
     </form>
 </body>
 <script>
@@ -70,7 +87,7 @@
         }
 
         if (number <= 0) {
-            alert("사람이 없을 순 없어 생각을 좀 해");
+            alert("사람이 없을 순 없는디? \n정신 차리기");
             form.input_num.focus();
             return false;
         }
