@@ -40,16 +40,40 @@
     <form id="input_num_form" action="choosewho.php" method="post">
         <div class="p_num">
             <lable for="input_num"> 몇 명이서 놀지? </lable><br>&nbsp;<br>
-            <input type="text" name="input_num" placeholder="숫자만 적기">
+            <input type="number" name="input_num" id="input_num" placeholder="숫자만 적을 수 있어요" required>
         </div>
         <div class="start_btn">
-            <button id="start_btn" name="start_btn" onclick="nextPage();"> 놀이 시작 !</button>
+            <button id="start_btn" name="start_btn" onclick="return nextPage();"> 놀이 시작 !</button>
         </div>
     </form>
 </body>
 <script>
     function nextPage() {
-        var form = document.getElementById("input_num_form");
+        const form = document.getElementById("input_num_form");
+        let number = document.getElementById("input_num").value;
+        //alert(number); number는 정상적으로 들어오고 있다
+        //const isNaN = isNan(number); input type="number"로 설정하여 숫자만 받음
+
+
+        /*if (isNaN == false) {
+            alert("숫자만 넣으라고 했다");
+            return false;
+        }
+        if (!number) {
+            alert("숫자 넣으라는 거 안 보이니?")
+            document.getElementById("input_num").focus();
+        }*/
+        if (number == 1) {
+            alert("친구 없니? 돌아가렴");
+            form.input_num.focus();
+            return false;
+        }
+
+        if (number <= 0) {
+            alert("사람이 없을 순 없어 생각을 좀 해");
+            form.input_num.focus();
+            return false;
+        }
         form.submit();
     }
 </script>
