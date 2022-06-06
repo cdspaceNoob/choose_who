@@ -15,8 +15,11 @@
     <title> 누가누가 운이 좋나 </title>
     <style>
         body {
-            background-image: url(rule.jpg);
+            background-image: url(back.jpg);
             background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            background-size: cover;
         }
 
         .p_num_div {
@@ -37,25 +40,53 @@
         }
 
         #input_num {
-            border-radius: 10px;
-            border: white solid 1px;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            border-color: white;
             text-align: center;
-            width: 40px;
+            font: white;
+            width: 100px;
+            background: transparent;
         }
+
+        #input_num:focus {
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            border-color: white;
+            text-align: center;
+            font: white;
+            width: 100px;
+            background: transparent;
+            outline: none;
+            color: white;
+        }
+
+        #input_num:focus::placeholder {
+            color: white;
+        }
+
+        #input_label {
+            color: white;
+        }
+
 
         input::placeholder {
             text-align: center;
             font-size: 10px;
+            color: white;
         }
     </style>
 </head>
 
 <body>
+
     <h1> 몇 명이서 놀 거야? </h1>
     <form id="input_num_form" action="choosewho.php" method="post">
 
         <div class="p_num_div">
-            <input type="number" name="input_num" id="input_num" placeholder="몇 명?">
+            <input type="number" name="input_num" id="input_num" autocomplete='off' placeholder="몇 명?">
         </div>
 
         <div class="start_btn">
@@ -64,6 +95,10 @@
 
     </form>
 </body>
+
+<!--Jquery부터 불러오기-->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
 <script>
     function nextPage() {
         const form = document.getElementById("input_num_form");
@@ -93,6 +128,10 @@
         }
         form.submit();
     }
+
+    $('#input_num').focus(function() {
+        $('#input_num').attr("placeholder", "몇 명인지 숫자만 입력!");
+    });
 </script>
 
 </html>
