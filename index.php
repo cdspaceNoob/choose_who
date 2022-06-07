@@ -140,6 +140,11 @@
     $('#input_num').focus(function() {
         $('#input_num').attr("placeholder", "몇 명인지 숫자만 입력!");
     });
+
+    $('#input_num').blur(function() {
+        $('#input_num').attr("placeholder", "몇 명?");
+        $('#input_num').css("font", "white");
+    });
 </script>
 
 </html>

@@ -12,9 +12,48 @@
 
     <!-- Bootstrap JavaScript 번들 불러오기-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title> 선택 받은 자가 누구야! </title>
+    <title> 선택 받을 자 누구야! </title>
     <style>
+        body {
+            background-image: url(back.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            background-size: cover;
+        }
+
         .insert_name_div {
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            padding-top: 300px;
+            padding-bottom: 50px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        input[name="insert_name"] {
+            margin: 10px;
+            opacity: 0.5;
+            border: none;
+            border-radius: 7px;
+            text-align: center;
+        }
+
+        input[name="insert_name"]:focus {
+            margin: 10px;
+            opacity: 0.5;
+            border: none;
+            border-radius: 7px;
+            text-align: center;
+            outline: none;
+        }
+
+        ::placeholder {
             text-align: center;
         }
     </style>
@@ -22,31 +61,42 @@
 
 <body>
     <?php $number = $_REQUEST["input_num"]; ?>
-    <h1 style="text-align: center; padding: 100px;"> 누가 걸릴지 기대가 된다 </h1>
-    <p style="text-align: center;"> 아래의 빈칸에 이름을 입력하세요 </p>
+    <h1> 승부는...<br> 단 3초안에 날 겁니다 </h1>
+    <p> 선수 입장 </p>
     <?php
     for ($i = 1; $i < $number + 1; $i++) { ?>
         <div class="insert_name_div">
-            <input type="text" placeholder="<?php echo $i; ?>번째 이름" name="insert_name" id="<?php echo "insert_name_" . $i; ?>" style="margin:10px;">
+            <input type="text" placeholder="<?php echo $i; ?>번 타자" name="insert_name" id="<?php echo "insert_name_" . $i; ?>">
         </div>
     <?php } ?>
     <div style="text-align: center; padding:30px">
-        <input type="button" name="btn_insert_name" id="btn_insert_name" value="당첨자 확인" onclick="choosewho()">
+        <button type="button" class="btn btn-primary" name="btn_insert_name" id="btn_insert_name" onclick="return choosewho()">될 놈 누구야!</button>
     </div>
     </form>
 </body>
 <script>
     function choosewho() {
         let name = new Array();
+
+        let replace_Char = /[~!@\#$%^&*\()\-=+_'\;<>0-9\/.\`:\"\\,\[\]?|{}]/gi;
+        let not_perfect_korean = /[ㄱ-ㅎ ㅏ-ㅣ]/gi;
+
         for (let i = 1; i < <?php echo $number; ?> + 1; i++) {
             let str = String("insert_name_" + i);
+            if (!(document.getElementById(str).value)) {
+                alert(i + "번 타자 대답합니다");
+                return false;
+            }
             //테스트를 위한 alert(str);
             name.push(document.getElementById(str));
             //테스트를 위한 alert(name[i - 1]);
         }
         let random_number = Math.floor(Math.random() * name.length);
         let name_picker = name[random_number].value;
-        alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
+        setTimeout(function() {
+            alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
+        }, 3000);
+
     }
 </script>
 
