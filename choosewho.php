@@ -14,6 +14,60 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title> 선택 받을 자 누구야! </title>
     <style>
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.3);
+            /* z-index는 모달을 화면의 맨 앞으로 끌어내기 위함 */
+            /* z-index: 1000; */
+
+            /* 일단 숨겨놓기 */
+            z-index: -1;
+            opacity: 0;
+        }
+
+        /* 모달이 나타날 때 적용할 스타일을 만들기 */
+        /* z-index와 opacity를 설정하여 투명도와 위치가 원래대로 나타나도록 */
+        .show {
+            opacity: 1;
+            z-index: 1000;
+            transition: all .5s;
+        }
+
+        .window {
+            /* 배경에 가득 차도록 width와 height 설정 */
+            /* 팝업이 들어갈 공간을 제한하기 위해 position: relative 속성 추가 */
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+
+            /* 임시지정? */
+            /* 화면의 세로 길이를 넘기는 경우에만 height를 지정하여 스크롤을 넣어둔다 */
+            /* 그렇지 않은 경우라면 아래 둘 다 지정하지 않는다 -> 내용을 넣으면 알아서 화면이 늘어나기 때문 */
+            width: 200px;
+            height: 200px;
+
+            /* 초기에 약간 아래에 배치하여 올라오는 느낌이 들도록 */
+            transform: translate(-50%, -40%);
+        }
+
+        .show .popup {
+            transform: translate(-50%, -50%);
+            transition: all .5s;
+        }
+
         body {
             background-image: url(back.jpg);
             background-repeat: no-repeat;
@@ -78,8 +132,30 @@
         <button type="button" class="btn btn-primary" name="btn_insert_name" id="btn_insert_name" onclick="return choosewho()">될 놈 누구야!</button>
     </div>
     </form>
+
+    <!-- 화면 전체를 어둡게 만들어주는 background-->
+    <div class="background">
+        <!-- 모달 팝업을 감싸주는(?) window-->
+        <div class="window">
+            <!-- 모달의 실제 내용을 표시하는 popup-->
+            <div class="popup"></div>
+        </div>
+    </div>
+
 </body>
+
+<!--Jquery부터 불러오기-->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
 <script>
+    function modal_open() {
+        document.querySelector(".background").className = "background show";
+    }
+
+    function modal_close() {
+        document.querySelector(".background").className = "background";
+    }
+
     function choosewho() {
         let name = new Array();
 
@@ -96,13 +172,30 @@
             name.push(document.getElementById(str));
             //테스트를 위한 alert(name[i - 1]);
         }
-        //여기에 3초 남음 모달 페이지 바로 만들기 
-        //settimeout 2초 : 모달 페이지 숫자 2로 바꾸기
-        //settimeout 1초 : 모달 페이지 숫자 1로 바꾸기
+
         let random_number = Math.floor(Math.random() * name.length);
         let name_picker = name[random_number].value;
+
+        $('.popup').html('3')
+        //모달 오픈
+        modal_open();
+
+        //1초가 지나면 2초가 남음
         setTimeout(function() {
-            alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
+            //getElementsByClassName은 innerHTML 속성을 가지고 있지 않으므로 JQuery사용
+            $('.popup').html('2')
+        }, 1000);
+
+        //2초가 지나면 1초가 남음
+        setTimeout(function() {
+            //getElementsByClassName은 innerHTML 속성을 가지고 있지 않으므로 JQuery사용
+            $('.popup').html('1')
+        }, 2000);
+
+        //3초 경과 시 결과 오픈
+        setTimeout(function() {
+            $('.popup').html("< " + name_picker + " >" + "\n바로 니가 주인공이야")
+            //alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
         }, 3000);
 
     }
