@@ -60,7 +60,12 @@
 </head>
 
 <body>
-    <?php $number = $_REQUEST["input_num"]; ?>
+    <?php $number = $_REQUEST["input_num"];
+    if (!$number) {
+        echo "<script> alert('몇 명이서 놀 건지부터 정해야지!'); </script>";
+        header("Refresh:0; URL=index.php");
+    }
+    ?>
     <h1> 승부는...<br> 단 3초안에 날 겁니다 </h1>
     <p> 선수 입장 </p>
     <?php
@@ -91,6 +96,9 @@
             name.push(document.getElementById(str));
             //테스트를 위한 alert(name[i - 1]);
         }
+        //여기에 3초 남음 모달 페이지 바로 만들기 
+        //settimeout 2초 : 모달 페이지 숫자 2로 바꾸기
+        //settimeout 1초 : 모달 페이지 숫자 1로 바꾸기
         let random_number = Math.floor(Math.random() * name.length);
         let name_picker = name[random_number].value;
         setTimeout(function() {
