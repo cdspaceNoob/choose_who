@@ -130,7 +130,7 @@
 
 
     <!-- 화면 전체를 어둡게 만들어주는 background-->
-    <div class="background">
+    <div class="background" id="background">
         <!-- 모달 팝업을 감싸주는(?) window-->
         <div class="window">
             <!-- 모달의 실제 내용을 표시하는 popup-->
@@ -195,6 +195,10 @@
             }, 3000);
 
         }
+
+        background.addEventListener("click", e => {
+            modal_close();
+        });
     </script>
 
 </body>
