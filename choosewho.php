@@ -205,10 +205,14 @@ if (!$number) {
             setTimeout(function() {
                 background.addEventListener("click", e => {
                     modal_close();
+                }, {
+                    once: true
                 });
             }, 3030);
 
             btn_insert_name_disabled.disabled = false;
+
+            return false;
         }
     </script>
 
