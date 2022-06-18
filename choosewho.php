@@ -11,7 +11,9 @@
 
     <!-- Bootstrap JavaScript 번들 불러오기-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <title> 선택 받을 자 누구야! </title>
+
     <style>
         .background {
             position: fixed;
@@ -112,22 +114,26 @@
     </style>
 </head>
 
+<?php
+$number = $_REQUEST['input_num'];
+if (!$number) {
+    echo "<script>alert('몇 명이서 놀 건지부터 정합시다');</script>";
+    header("Refresh:0; URL=index.php");
+}
+?>
+
 <body>
     <h1> 승부는...<br> 단 3초안에 날 겁니다 </h1>
     <p> 선수 입장 </p>
-    <div class="insert_name_div">
-        <input type="text" placeholder="1번 타자" name="insert_name" id="insert_name_1">
-    </div>
-    <div class="insert_name_div">
-        <input type="text" placeholder="2번 타자" name="insert_name" id="insert_name_2">
-    </div>
-    <div class="insert_name_div">
-        <input type="text" placeholder="3번 타자" name="insert_name" id="insert_name_3">
-    </div>
+    <?php
+    for ($i = 1; $i <= $number; $i++) { ?>
+        <div class="insert_name_div">
+            <input type="text" placeholder="<?php echo $i . '번 타자'; ?>" name="insert_name" id="<?php echo 'insert_name_' . $i; ?>">
+        </div>
+    <?php } ?>
     <div style="text-align: center; padding:30px">
         <button type="button" class="btn btn-primary" name="btn_insert_name" id="btn_insert_name" onclick="return choosewho()">될 놈 누구야!</button>
     </div>
-
 
     <!-- 화면 전체를 어둡게 만들어주는 background-->
     <div class="background" id="background">
@@ -137,70 +143,80 @@
             <div class="popup"></div>
         </div>
     </div>
-
-
-
-    <!--Jquery부터 불러오기-->
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
-    <script>
-        function modal_open() {
-            document.querySelector(".background").className = "background show";
-        }
-
-        function modal_close() {
-            document.querySelector(".background").className = "background";
-        }
-
-        function choosewho() {
-            let name = new Array();
-
-            let replace_Char = /[~!@\#$%^&*\()\-=+_'\;<>0-9\/.\`:\"\\,\[\]?|{}]/gi;
-            let not_perfect_korean = /[ㄱ-ㅎ ㅏ-ㅣ]/gi;
-
-            for (let i = 1; i < 3 + 1; i++) {
-                let str = String("insert_name_" + i);
-                if (!(document.getElementById(str).value)) {
-                    alert(i + "번 타자 대답합니다");
-                    return false;
-                }
-                //테스트를 위한 alert(str);
-                name.push(document.getElementById(str));
-                //테스트를 위한 alert(name[i - 1]);
-            }
-
-            let random_number = Math.floor(Math.random() * name.length);
-            let name_picker = name[random_number].value;
-
-            $('.popup').html('3')
-            //모달 오픈
-            modal_open();
-
-            //1초가 지나면 2초가 남음
-            setTimeout(function() {
-                //getElementsByClassName은 innerHTML 속성을 가지고 있지 않으므로 JQuery사용
-                $('.popup').html('2')
-            }, 1000);
-
-            //2초가 지나면 1초가 남음
-            setTimeout(function() {
-                //getElementsByClassName은 innerHTML 속성을 가지고 있지 않으므로 JQuery사용
-                $('.popup').html('1')
-            }, 2000);
-
-            //3초 경과 시 결과 오픈
-            setTimeout(function() {
-                $('.popup').html("< " + name_picker + " >" + "\n바로 니가 주인공이야")
-                //alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
-            }, 3000);
-
-        }
-
-        background.addEventListener("click", e => {
-            modal_close();
-        });
-    </script>
-
 </body>
+
+<!--Jquery부터 불러오기-->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script>
+    function modal_open() {
+        document.querySelector(".background").className = "background show";
+    }
+
+    function modal_close() {
+        document.querySelector(".background").className = "background";
+    }
+
+    function choosewho() {
+        let name = new Array();
+
+        let replace_Char = /[~!@\#$%^&*\()\-=+_'\;<>0-9\/.\`:\"\\,\[\]?|{}]/gi;
+        let not_perfect_korean = /[ㄱ-ㅎ ㅏ-ㅣ]/gi;
+
+        for (let i = 1; i < 3 + 1; i++) {
+            let str = String("insert_name_" + i);
+            if (!(document.getElementById(str).value)) {
+                alert(i + "번 타자 대답합니다");
+                return false;
+            }
+            //테스트를 위한 alert(str);
+            name.push(document.getElementById(str));
+            //테스트를 위한 alert(name[i - 1]);
+        }
+
+        let random_number = Math.floor(Math.random() * name.length);
+        let name_picker = name[random_number].value;
+
+        const btn_insert_name_disabled = document.querySelector("#btn_insert_name");
+
+        $('.popup').html('3')
+
+        //클릭 비활성화
+        btn_insert_name.addEventListener("click", function(e) {
+            this.setAttribute("disabled", "disabled");
+        })
+        //모달 오픈
+        modal_open();
+
+        //1초가 지나면 2초가 남음
+        setTimeout(function() {
+            //getElementsByClassName은 innerHTML 속성을 가지고 있지 않으므로 JQuery사용
+            $('.popup').html('2')
+        }, 1000);
+
+        //2초가 지나면 1초가 남음
+        setTimeout(function() {
+            //getElementsByClassName은 innerHTML 속성을 가지고 있지 않으므로 JQuery사용
+            $('.popup').html('1')
+        }, 2000);
+
+        //3초 경과 시 결과 오픈
+        setTimeout(function() {
+            $('.popup').html("< " + name_picker + " >" + "\n바로 니가 주인공이야")
+            //alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
+        }, 3000);
+
+        setTimeout(function() {
+            background.addEventListener("click", e => {
+                modal_close();
+            });
+        }, 3050);
+
+        //클릭 활성화
+        btn_insert_name.addEventListener("click", function(e) {
+            this.setAttribute("", "");
+        })
+    }
+</script>
 
 </html>
