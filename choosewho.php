@@ -81,7 +81,7 @@
 
         h1 {
             text-align: center;
-            padding-top: 300px;
+            padding-top: 200px;
             padding-bottom: 50px;
         }
 
@@ -179,8 +179,12 @@ if (!$number) {
 
             const btn_insert_name_disabled = document.getElementById("btn_insert_name");
 
+            //모달 오픈 직후 제출 버튼 비활성화
             btn_insert_name_disabled.disabled = true;
+
+            //모달 오픈 전 초기값 설정
             $('.popup').html('3')
+
             //모달 오픈
             modal_open();
 
@@ -202,6 +206,7 @@ if (!$number) {
                 //alert("< " + name_picker + " >" + "\n바로 니가 주인공이야");
             }, 3000);
 
+            //3초+@ 경과 시 모달 외부 클릭으로 모달을 닫을 수 있게
             setTimeout(function() {
                 background.addEventListener("click", e => {
                     modal_close();
@@ -210,9 +215,8 @@ if (!$number) {
                 });
             }, 3030);
 
+            //모달 기능 종료 후 재츌 버튼 활성화
             btn_insert_name_disabled.disabled = false;
-
-            return false;
         }
     </script>
 
