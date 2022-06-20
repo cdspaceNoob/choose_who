@@ -65,6 +65,8 @@
         .show .popup {
             transform: translate(-50%, -50%);
             transition: all .5s;
+            text-align: center;
+            vertical-align: middle;
         }
 
         body {
